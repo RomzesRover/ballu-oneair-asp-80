@@ -322,11 +322,20 @@ sensor:
       reference_temperature: 20°C
       reference_resistance: 12.5kOhm
     on_value:
-      if:
-        condition:
-          switch.is_on: heater_output
-        then:
-          script.execute: heat_set_target
+      - if:
+          condition:
+            switch.is_on: heater_output
+          then:
+            script.execute: heat_set_target
+      - if:
+          condition:
+            and:
+              - lambda: 'return x < 10.0f;'
+              - switch.is_off: heater_output
+              - fan.is_on: fan_output
+          then:
+            - switch.turn_on: heater_output
+
 
 text_sensor:
   - platform: wifi_info
