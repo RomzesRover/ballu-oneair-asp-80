@@ -33,6 +33,14 @@ globals:
     type: bool
     initial_value: 'false'
     restore_value: True
+  - id: previous_temperature
+    type: float
+    initial_value: '0.0'
+    restore_value: no
+  - id: temperature_initialized
+    type: bool
+    initial_value: 'false'
+    restore_value: no
 
 esp32:
   board: esp32dev
@@ -209,9 +217,24 @@ script:
   - id: heat_set_target
     then:
       lambda: |-
-        float target =  std::clamp((id(target_power).state * id(fan_output).speed / 10000.0f) * (2.0f - 0.05f * id(temperature).state),0.0f,1.0f);
+        if (!id(temperature_initialized)) {
+          id(previous_temperature) = id(temperature).state;
+          id(temperature_initialized) = true;
+        }
+
+        float temperature_delta = id(temperature).state - id(previous_temperature);
+        id(previous_temperature) = id(temperature).state;
+
+        float predicted_temperature = id(temperature).state + 10.0f * temperature_delta;
+
+        float tError =  id(target_temparature).state - predicted_temperature;
+        id(temperature_error).publish_state(tError);
+        float delta = tError * 0.0005f;
+        delta = std::clamp(delta, -0.01f, 0.01f);
+
+        float target = std::clamp(id(heat_current).state / 100.0f + delta, 0.0f, 1.0f);
         id(heating_gpio).set_level(target);
-        id(heat_current).publish_state(target * 100.0);
+        id(heat_current).publish_state(target * 100.0f);
   - id: heat_change
     then:
       - script.execute: led_check             
@@ -270,6 +293,13 @@ sensor:
     id: heat_current
     icon: "mdi:thermometer-auto"
     unit_of_measurement: '%'
+    update_interval: never
+
+  - platform: template
+    name: ${dev_name}_temperature_error
+    id: temperature_error
+    icon: "mdi:thermometer-auto"
+    unit_of_measurement: '°C'
     update_interval: never
 
   - platform: resistance
@@ -445,15 +475,15 @@ fan:
 
 number:
   - platform: template
-    name: ${dev_name}_heat_power
+    name: ${dev_name}_target_temparature
     optimistic: true
     min_value: 10.0
-    max_value: 100.0
-    step: 5.0
+    max_value: 30.0
+    step: 1.0
     restore_value: true
-    id: target_power
+    id: target_temparature
     icon: "mdi:thermometer-lines"
-    unit_of_measurement: "%"
+    unit_of_measurement: "°C"
     on_value:
       - script.execute: heat_change
       - lambda: 'global_preferences->sync();'
