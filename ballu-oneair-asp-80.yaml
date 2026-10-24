@@ -63,7 +63,7 @@ esphome:
       - fan.turn_off: fan_output
       - output.turn_off: buzzer   # Звук при включении отключаем
       - lambda: 'id(heat_current).publish_state(0);'
-#      - lambda: 'id(fan_output).turn_on().set_speed(30).perform();' # Автоматический запуск на 1 скорости после включения
+      - lambda: 'id(fan_output).turn_on().set_speed(25).perform();' # Автоматический запуск на 1 скорости после включения
 
 # Enable logging
 logger:
