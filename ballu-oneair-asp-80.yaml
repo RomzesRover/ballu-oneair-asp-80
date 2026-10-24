@@ -186,9 +186,9 @@ script:
             lambda: |-
               if (id(heater_output).state) id(led_heating).set_level(id(half_led)?0.15:1); else id(led_heating).turn_off();
               if (id(fan_output).state) {
-                if (id(fan_output).speed >= 30) id(led_1_speed).set_level(id(half_led)?0.15:1); else id(led_1_speed).turn_off();
-                if (id(fan_output).speed >= 65) id(led_2_speed).set_level(id(half_led)?0.15:1); else id(led_2_speed).turn_off();
-                if (id(fan_output).speed >= 100) id(led_3_speed).set_level(id(half_led)?0.15:1);else id(led_3_speed).turn_off();
+                if (id(fan_output).speed >= 25) id(led_1_speed).set_level(id(half_led)?0.15:1); else id(led_1_speed).turn_off();
+                if (id(fan_output).speed >= 30) id(led_2_speed).set_level(id(half_led)?0.15:1); else id(led_2_speed).turn_off();
+                if (id(fan_output).speed >= 45) id(led_3_speed).set_level(id(half_led)?0.15:1);else id(led_3_speed).turn_off();
               } else {
                 id(led_1_speed).turn_off();
                 id(led_2_speed).turn_off();
@@ -361,10 +361,10 @@ binary_sensor:
           then:
             - script.execute: play_beep_short
             - lambda: |-
-                if (id(fan_output).speed < 30) id(fan_output).turn_on().set_speed(30).perform();
-                else if (id(fan_output).speed < 65) id(fan_output).turn_on().set_speed(65).perform();
-                else if (id(fan_output).speed < 100) id(fan_output).turn_on().set_speed(100).perform();
-                else id(fan_output).turn_on().set_speed(30).perform();
+                if (id(fan_output).speed < 25) id(fan_output).turn_on().set_speed(25).perform();
+                else if (id(fan_output).speed < 30) id(fan_output).turn_on().set_speed(30).perform();
+                else if (id(fan_output).speed < 45) id(fan_output).turn_on().set_speed(45).perform();
+                else id(fan_output).turn_on().set_speed(25).perform();
             - script.execute: led_check
           else:
             fan.turn_on: fan_output
