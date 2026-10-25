@@ -434,26 +434,160 @@ binary_sensor:
         - script.execute: play_beep_short
         - if:
             condition:
-              lambda: "return id(errors);"
+              switch.is_on: heater_output
             then:
-              - light.turn_off: led_info
-              - lambda: "id(errors) = false;"
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 500ms
+              - lambda: |-
+                  float target = id(target_temparature).state;
+
+                  if (target < 17.5f) {
+                    id(target_temparature).make_call().set_value(20.0f).perform();
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  else if (target < 22.5f) {
+                    id(target_temparature).make_call().set_value(25.0f).perform();
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(1.0f);
+                  }
+                  else {
+                    id(target_temparature).make_call().set_value(15.0f).perform();
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(0.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+              - delay: 100ms
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 100ms
+              - lambda: |-
+                  float target = id(target_temparature).state;
+
+                  if (target == 15.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(0.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 20.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 25.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(1.0f);
+                  }
+              - delay: 100ms
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 100ms
+              - lambda: |-
+                  float target = id(target_temparature).state;
+
+                  if (target == 15.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(0.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 20.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 25.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(1.0f);
+                  }
+              - delay: 100ms
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 100ms
+              - lambda: |-
+                  float target = id(target_temparature).state;
+
+                  if (target == 15.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(0.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 20.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 25.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(1.0f);
+                  }
+              - delay: 100ms
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 100ms
+              - lambda: |-
+                  float target = id(target_temparature).state;
+
+                  if (target == 15.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(0.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 20.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(0.0f);
+                  }
+                  if (target == 25.0f) {
+                    id(led_1_speed).set_level(1.0f);
+                    id(led_2_speed).set_level(1.0f);
+                    id(led_3_speed).set_level(1.0f);
+                  }
+              - delay: 100ms
+              - lambda: |-
+                  id(led_1_speed).set_level(0.0f);
+                  id(led_2_speed).set_level(0.0f);
+                  id(led_3_speed).set_level(0.0f);
+              - delay: 500ms
+              - script.execute: led_check
             else:
               - if:
                   condition:
-                    switch.is_off: led_enable
+                    lambda: "return id(errors);"
                   then:
-                    - lambda: "id(half_led) = true;"
-                    - switch.turn_on: led_enable
-                  else: 
+                    - light.turn_off: led_info
+                    - lambda: "id(errors) = false;"
+                  else:
                     - if:
                         condition:
-                            lambda: "return id(half_led);"
+                          switch.is_off: led_enable
                         then:
-                          - lambda: "id(half_led) = false;"
-                          - script.execute: led_check
-                        else:
-                          switch.turn_off: led_enable
+                          - lambda: "id(half_led) = true;"
+                          - switch.turn_on: led_enable
+                        else: 
+                          - if:
+                              condition:
+                                  lambda: "return id(half_led);"
+                              then:
+                                - lambda: "id(half_led) = false;"
+                                - script.execute: led_check
+                              else:
+                                switch.turn_off: led_enable
 
 fan:
   - platform: speed
