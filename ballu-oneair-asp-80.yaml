@@ -161,6 +161,196 @@ light:
               duration: 1s
 
 script:
+  - id: toggle_heater_preset
+    then:
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 500ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target < 17.5f) {
+            id(target_temparature).make_call().set_value(20.0f).perform();
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          else if (target < 22.5f) {
+            id(target_temparature).make_call().set_value(25.0f).perform();
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+          else {
+            id(target_temparature).make_call().set_value(15.0f).perform();
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 100ms
+      - lambda: |-
+          float target = id(target_temparature).state;
+
+          if (target == 15.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(0.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 20.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(0.0f);
+          }
+          if (target == 25.0f) {
+            id(led_1_speed).set_level(1.0f);
+            id(led_2_speed).set_level(1.0f);
+            id(led_3_speed).set_level(1.0f);
+          }
+      - delay: 100ms
+      - lambda: |-
+          id(led_1_speed).set_level(0.0f);
+          id(led_2_speed).set_level(0.0f);
+          id(led_3_speed).set_level(0.0f);
+      - delay: 500ms
+  - id: toggle_fan_speed
+    then:
+      - lambda: |-
+          int correction = (int) id(fan_speed_corrector).state;
+          int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+          int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+          int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+
+          if (id(fan_output).speed < firstSpeed) id(fan_output).turn_on().set_speed(firstSpeed).perform();
+          else if (id(fan_output).speed < secondSpeed) id(fan_output).turn_on().set_speed(secondSpeed).perform();
+          else if (id(fan_output).speed < thirdSpeed) id(fan_output).turn_on().set_speed(thirdSpeed).perform();
+          else id(fan_output).turn_on().set_speed(firstSpeed).perform();
   - id: play_beep
     then:
       - if:
@@ -419,16 +609,7 @@ binary_sensor:
             fan.is_on: fan_output
           then:
             - script.execute: play_beep_short
-            - lambda: |-
-                int correction = (int) id(fan_speed_corrector).state;
-                int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
-                int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
-                int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
-                
-                if (id(fan_output).speed < firstSpeed) id(fan_output).turn_on().set_speed(firstSpeed).perform();
-                else if (id(fan_output).speed < secondSpeed) id(fan_output).turn_on().set_speed(secondSpeed).perform();
-                else if (id(fan_output).speed < thirdSpeed) id(fan_output).turn_on().set_speed(thirdSpeed).perform();
-                else id(fan_output).turn_on().set_speed(firstSpeed).perform();
+            - script.execute: toggle_fan_speed
             - script.execute: led_check
           else:
             fan.turn_on: fan_output
@@ -461,134 +642,8 @@ binary_sensor:
             condition:
               switch.is_on: heater_output
             then:
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 500ms
-              - lambda: |-
-                  float target = id(target_temparature).state;
-
-                  if (target < 17.5f) {
-                    id(target_temparature).make_call().set_value(20.0f).perform();
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  else if (target < 22.5f) {
-                    id(target_temparature).make_call().set_value(25.0f).perform();
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(1.0f);
-                  }
-                  else {
-                    id(target_temparature).make_call().set_value(15.0f).perform();
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(0.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-              - delay: 100ms
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 100ms
-              - lambda: |-
-                  float target = id(target_temparature).state;
-
-                  if (target == 15.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(0.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 20.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 25.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(1.0f);
-                  }
-              - delay: 100ms
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 100ms
-              - lambda: |-
-                  float target = id(target_temparature).state;
-
-                  if (target == 15.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(0.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 20.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 25.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(1.0f);
-                  }
-              - delay: 100ms
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 100ms
-              - lambda: |-
-                  float target = id(target_temparature).state;
-
-                  if (target == 15.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(0.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 20.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 25.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(1.0f);
-                  }
-              - delay: 100ms
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 100ms
-              - lambda: |-
-                  float target = id(target_temparature).state;
-
-                  if (target == 15.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(0.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 20.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(0.0f);
-                  }
-                  if (target == 25.0f) {
-                    id(led_1_speed).set_level(1.0f);
-                    id(led_2_speed).set_level(1.0f);
-                    id(led_3_speed).set_level(1.0f);
-                  }
-              - delay: 100ms
-              - lambda: |-
-                  id(led_1_speed).set_level(0.0f);
-                  id(led_2_speed).set_level(0.0f);
-                  id(led_3_speed).set_level(0.0f);
-              - delay: 500ms
+              - script.execute: toggle_heater_preset
+              - script.wait: toggle_heater_preset
               - script.execute: led_check
             else:
               - if:
@@ -712,3 +767,30 @@ switch:
 button:
   - platform: safe_mode
     name: ${dev_name}_safe_mode
+  - platform: template
+    name: ${dev_name}_w_fan_speed_toggle
+    on_press:
+      then:
+        if:
+          condition:
+            fan.is_on: fan_output
+          then:
+            - script.execute: play_beep_short
+            - script.execute: toggle_fan_speed
+            - script.execute: led_check
+          else:
+            fan.turn_on: fan_output
+  - platform: template
+    name: ${dev_name}_w_heater_preset_toggle
+    on_press:
+      then:
+        if:
+          condition:
+            switch.is_on: heater_output
+          then:
+            - script.execute: play_beep_short
+            - script.execute: toggle_heater_preset
+            - script.wait: toggle_heater_preset
+            - script.execute: led_check
+          else:
+            switch.turn_on: heater_output
