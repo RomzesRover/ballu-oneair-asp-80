@@ -53,15 +53,15 @@ globals:
     type: int
     initial_value: '45'
     restore_value: no
-  - id: target_temparature_preset_1
+  - id: target_temperature_preset_1
     type: float
     initial_value: '15.0'
     restore_value: no
-  - id: target_temparature_preset_2
+  - id: target_temperature_preset_2
     type: float
     initial_value: '20.0'
     restore_value: no
-  - id: target_temparature_preset_3
+  - id: target_temperature_preset_3
     type: float
     initial_value: '25.0'
     restore_value: no
@@ -183,20 +183,20 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target < id(target_temparature_preset_2)) {
-            id(target_temparature).make_call().set_value(id(target_temparature_preset_2)).perform();
+          if (target < id(target_temperature_preset_2)) {
+            id(target_temparature).make_call().set_value(id(target_temperature_preset_2)).perform();
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          else if (target < id(target_temparature_preset_3)) {
-            id(target_temparature).make_call().set_value(id(target_temparature_preset_3)).perform();
+          else if (target < id(target_temperature_preset_3)) {
+            id(target_temparature).make_call().set_value(id(target_temperature_preset_3)).perform();
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
           }
           else {
-            id(target_temparature).make_call().set_value(id(target_temparature_preset_1)).perform();
+            id(target_temparature).make_call().set_value(id(target_temperature_preset_1)).perform();
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
@@ -210,17 +210,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
@@ -234,17 +234,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
@@ -258,17 +258,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
@@ -282,17 +282,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
@@ -306,17 +306,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
@@ -330,17 +330,17 @@ script:
       - lambda: |-
           float target = id(target_temparature).state;
 
-          if (target == id(target_temparature_preset_1)) {
+          if (target == id(target_temperature_preset_1)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(0.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_2)) {
+          if (target == id(target_temperature_preset_2)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(0.0f);
           }
-          if (target == id(target_temparature_preset_3)) {
+          if (target == id(target_temperature_preset_3)) {
             id(led_1_speed).set_level(1.0f);
             id(led_2_speed).set_level(1.0f);
             id(led_3_speed).set_level(1.0f);
