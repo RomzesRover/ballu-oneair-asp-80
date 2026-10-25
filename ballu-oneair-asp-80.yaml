@@ -41,6 +41,18 @@ globals:
     type: bool
     initial_value: 'false'
     restore_value: no
+  - id: fan_speed_1
+    type: int
+    initial_value: '25'
+    restore_value: no
+  - id: fan_speed_2
+    type: int
+    initial_value: '30'
+    restore_value: no
+  - id: fan_speed_3
+    type: int
+    initial_value: '45'
+    restore_value: no
 
 esp32:
   board: esp32dev
@@ -63,7 +75,11 @@ esphome:
       - fan.turn_off: fan_output
       - output.turn_off: buzzer   # Звук при включении отключаем
       - lambda: 'id(heat_current).publish_state(0);'
-      - lambda: 'id(fan_output).turn_on().set_speed(25).perform();' # Автоматический запуск на 1 скорости после включения
+      - lambda: |-
+          int correction = (int) id(fan_speed_corrector).state;
+          int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+          id(fan_output).turn_on().set_speed(firstSpeed).perform();
+# Автоматический запуск на 1 скорости после включения
 
 # Enable logging
 logger:
@@ -194,9 +210,13 @@ script:
             lambda: |-
               if (id(heater_output).state) id(led_heating).set_level(id(half_led)?0.15:1); else id(led_heating).turn_off();
               if (id(fan_output).state) {
-                if (id(fan_output).speed >= 25) id(led_1_speed).set_level(id(half_led)?0.15:1); else id(led_1_speed).turn_off();
-                if (id(fan_output).speed >= 30) id(led_2_speed).set_level(id(half_led)?0.15:1); else id(led_2_speed).turn_off();
-                if (id(fan_output).speed >= 45) id(led_3_speed).set_level(id(half_led)?0.15:1);else id(led_3_speed).turn_off();
+                int correction = (int) id(fan_speed_corrector).state;
+                int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+                int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+                int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+                if (id(fan_output).speed >= firstSpeed) id(led_1_speed).set_level(id(half_led)?0.15:1); else id(led_1_speed).turn_off();
+                if (id(fan_output).speed >= secondSpeed) id(led_2_speed).set_level(id(half_led)?0.15:1); else id(led_2_speed).turn_off();
+                if (id(fan_output).speed >= thirdSpeed) id(led_3_speed).set_level(id(half_led)?0.15:1);else id(led_3_speed).turn_off();
               } else {
                 id(led_1_speed).turn_off();
                 id(led_2_speed).turn_off();
@@ -400,10 +420,15 @@ binary_sensor:
           then:
             - script.execute: play_beep_short
             - lambda: |-
-                if (id(fan_output).speed < 25) id(fan_output).turn_on().set_speed(25).perform();
-                else if (id(fan_output).speed < 30) id(fan_output).turn_on().set_speed(30).perform();
-                else if (id(fan_output).speed < 45) id(fan_output).turn_on().set_speed(45).perform();
-                else id(fan_output).turn_on().set_speed(25).perform();
+                int correction = (int) id(fan_speed_corrector).state;
+                int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+                int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+                int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+                
+                if (id(fan_output).speed < firstSpeed) id(fan_output).turn_on().set_speed(firstSpeed).perform();
+                else if (id(fan_output).speed < secondSpeed) id(fan_output).turn_on().set_speed(secondSpeed).perform();
+                else if (id(fan_output).speed < thirdSpeed) id(fan_output).turn_on().set_speed(thirdSpeed).perform();
+                else id(fan_output).turn_on().set_speed(firstSpeed).perform();
             - script.execute: led_check
           else:
             fan.turn_on: fan_output
@@ -618,11 +643,22 @@ fan:
 
 number:
   - platform: template
+    name: ${dev_name}_fan_speed_corrector
+    optimistic: true
+    min_value: -20.0
+    max_value: 20.0
+    step: 1.0
+    initial_value: 0.0
+    restore_value: true
+    id: fan_speed_corrector
+
+  - platform: template
     name: ${dev_name}_target_temparature
     optimistic: true
     min_value: 10.0
     max_value: 30.0
     step: 1.0
+    initial_value: 20.0
     restore_value: true
     id: target_temparature
     icon: "mdi:thermometer-lines"
