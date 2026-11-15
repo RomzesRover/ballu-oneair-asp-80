@@ -99,21 +99,25 @@ esphome:
       - fan.turn_off: fan_output
       - output.turn_off: buzzer   # Звук при включении отключаем
       - lambda: 'id(heat_current).publish_state(0);'
-      - lambda: |-
-          int correction = (int) id(fan_speed_corrector).state;
-          int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
-          int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
-          int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
-
-          if (id(last_fan_speed) == 1) {
-            id(fan_output).turn_on().set_speed(firstSpeed).perform();
-          }
-          if (id(last_fan_speed) == 2) {
-            id(fan_output).turn_on().set_speed(secondSpeed).perform();
-          }
-          if (id(last_fan_speed) == 3) {
-            id(fan_output).turn_on().set_speed(thirdSpeed).perform();
-          }
+      - if:
+          condition:
+            switch.is_on: auto_start_on_power
+          then:
+            - lambda: |-
+                int correction = (int) id(fan_speed_corrector).state;
+                int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+                int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+                int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+                
+                if (id(last_fan_speed) == 1) {
+                  id(fan_output).turn_on().set_speed(firstSpeed).perform();
+                }
+                if (id(last_fan_speed) == 2) {
+                  id(fan_output).turn_on().set_speed(secondSpeed).perform();
+                }
+                if (id(last_fan_speed) == 3) {
+                  id(fan_output).turn_on().set_speed(thirdSpeed).perform();
+                }
 # Автоматический запуск после включения
 
 # Enable logging
@@ -940,6 +944,14 @@ switch:
     icon: "mdi:volume-high"
     optimistic: true
     restore_mode: RESTORE_DEFAULT_ON
+    entity_category: "config"
+
+  - platform: template
+    id: auto_start_on_power
+    name: ${dev_name}_auto_start_on_power
+    icon: "mdi:volume-high"
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
     entity_category: "config"
 
 button:
