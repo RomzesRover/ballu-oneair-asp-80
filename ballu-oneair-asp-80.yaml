@@ -687,7 +687,8 @@ sensor:
       - if:
           condition:
             and:
-              - lambda: 'return x < 10.0f;'
+              - lambda: 'return id(heater_auto_switch).state > 0.0f;'
+              - lambda: 'return x < id(target_temparature).state - id(heater_auto_switch).state;'
               - switch.is_off: heater_output
               - fan.is_on: fan_output
           then:
@@ -883,6 +884,20 @@ number:
     unit_of_measurement: "°C"
     on_value:
       - script.execute: heat_change
+      - lambda: 'global_preferences->sync();'
+
+  - platform: template
+    name: ${dev_name}_heater_auto_switch
+    optimistic: true
+    min_value: 0.0
+    max_value: 15.0
+    step: 5.0
+    initial_value: 0.0
+    restore_value: true
+    id: heater_auto_switch
+    icon: "mdi:thermometer-lines"
+    unit_of_measurement: "Δ°C"
+    on_value:
       - lambda: 'global_preferences->sync();'
 
 switch:
