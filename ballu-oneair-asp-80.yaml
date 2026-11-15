@@ -53,6 +53,10 @@ globals:
     type: int
     initial_value: '45'
     restore_value: no
+  - id: last_fan_speed
+    type: int
+    initial_value: '1'
+    restore_value: yes
   - id: target_temperature_preset_1
     type: float
     initial_value: '10.0'
@@ -98,8 +102,19 @@ esphome:
       - lambda: |-
           int correction = (int) id(fan_speed_corrector).state;
           int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
-          id(fan_output).turn_on().set_speed(firstSpeed).perform();
-# Автоматический запуск на 1 скорости после включения
+          int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+          int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+
+          if (id(last_fan_speed) == 1) {
+            id(fan_output).turn_on().set_speed(firstSpeed).perform();
+          }
+          if (id(last_fan_speed) == 2) {
+            id(fan_output).turn_on().set_speed(secondSpeed).perform();
+          }
+          if (id(last_fan_speed) == 3) {
+            id(fan_output).turn_on().set_speed(thirdSpeed).perform();
+          }
+# Автоматический запуск после включения
 
 # Enable logging
 logger:
@@ -479,10 +494,10 @@ script:
           int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
           int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
 
-          if (id(fan_output).speed < firstSpeed) id(fan_output).turn_on().set_speed(firstSpeed).perform();
-          else if (id(fan_output).speed < secondSpeed) id(fan_output).turn_on().set_speed(secondSpeed).perform();
-          else if (id(fan_output).speed < thirdSpeed) id(fan_output).turn_on().set_speed(thirdSpeed).perform();
-          else id(fan_output).turn_on().set_speed(firstSpeed).perform();
+          if (id(fan_output).speed < firstSpeed) { id(fan_output).turn_on().set_speed(firstSpeed).perform(); id(last_fan_speed) = 1; }
+          else if (id(fan_output).speed < secondSpeed) { id(fan_output).turn_on().set_speed(secondSpeed).perform(); id(last_fan_speed) = 2; }
+          else if (id(fan_output).speed < thirdSpeed) { id(fan_output).turn_on().set_speed(thirdSpeed).perform(); id(last_fan_speed) = 3; }
+          else { id(fan_output).turn_on().set_speed(firstSpeed).perform(); id(last_fan_speed) = 1; }
   - id: play_beep
     then:
       - if:
@@ -834,10 +849,26 @@ number:
     optimistic: true
     min_value: -20.0
     max_value: 20.0
-    step: 1.0
+    step: 5.0
     initial_value: 0.0
     restore_value: true
     id: fan_speed_corrector
+    on_value:
+      - lambda: |-
+          int correction = (int) id(fan_speed_corrector).state;
+          int firstSpeed = std::clamp(id(fan_speed_1) + correction, 1, 100);
+          int secondSpeed = std::clamp(id(fan_speed_2) + correction, 1, 100);
+          int thirdSpeed = std::clamp(id(fan_speed_3) + correction, 1, 100);
+
+          if (id(last_fan_speed) == 1) {
+            id(fan_output).turn_on().set_speed(firstSpeed).perform();
+          }
+          if (id(last_fan_speed) == 2) {
+            id(fan_output).turn_on().set_speed(secondSpeed).perform();
+          }
+          if (id(last_fan_speed) == 3) {
+            id(fan_output).turn_on().set_speed(thirdSpeed).perform();
+          }
 
   - platform: template
     name: ${dev_name}_target_temparature
